@@ -1,0 +1,167 @@
+Microsoft (R) Macro Assembler Version 14.23.28105.4	    05/20/20 15:06:01
+IOExample.asm						     Page 1 - 1
+
+
+				;final Edwin Kam
+
+
+				.586
+				.MODEL FLAT
+
+				INCLUDE io.h            ; header file for input/output
+			      C ; IO.H -- header file for I/O macros (listing suppressed)
+			      C .NOLIST      ; turn off listing
+			      C .LIST        ; begin listing
+			      C 
+
+				.STACK 4096
+
+ 00000000			.DATA 
+ 00000000 00000000		number1 DWORD   ?
+ 00000004 00000000		number2 DWORD   ?
+ 00000008 00000000		count DWORD   ?
+ 0000000C  000003E8 [		array	DWORD		1000 DUP (?)	; the array (100 max elements)
+	    00000000
+	   ]
+ 00000FAC 45 6E 74 65 72	prompt1 BYTE    "Enter a number", 0
+	   20 61 20 6E 75
+	   6D 62 65 72 00
+ 00000FBB 45 6E 74 65 72	prompt2 BYTE    "Enter 10 numbers to set up the array", 0
+	   20 31 30 20 6E
+	   75 6D 62 65 72
+	   73 20 74 6F 20
+	   73 65 74 20 75
+	   70 20 74 68 65
+	   20 61 72 72 61
+	   79 00
+
+
+ 00000FE0  00000028 [		string  BYTE    40 DUP (?)
+	    00
+	   ]
+ 00001008 4E 75 6D 62 65	resultLbl BYTE  "Number of numbers matched", 0
+	   72 20 6F 66 20
+	   6E 75 6D 62 65
+	   72 73 20 6D 61
+	   74 63 68 65 64
+	   00
+ 00001022 74 68 69 73 20	noleap BYTE  "this is not a leap year", 0
+	   69 73 20 6E 6F
+	   74 20 61 20 6C
+	   65 61 70 20 79
+	   65 61 72 00
+ 0000103A  0000000B [		sum     BYTE    11 DUP (?), 0
+	    00
+	   ] 00
+
+ 00000000			.CODE
+ 00000000			_MainProc PROC
+				        
+
+
+ 00000000  B9 0000000A				mov ecx, 10
+ 00000005  8D 1D 0000000C R			lea ebx, array	;set up ebx
+ 0000000B			create:	
+						input   prompt2, string, 40      ; read ASCII characters
+				        atod    string          ; convert to integer
+ 00000038  89 03				mov [ebx], eax	;put the number into the array
+ 0000003A  83 C3 04				add ebx, 4	;inc ebx to next box
+ 0000003D  E2 CC				loop create
+
+						input   prompt1, string, 40      ; read ASCII characters
+				        atod    string          ; convert to integer
+ 0000006C  A3 00000000 R	        mov     number1, eax    ; store in memory
+
+ 00000071  C7 05 00000008 R			mov count, 0		;initialize count
+	   00000000
+ 0000007B  B9 0000000A				mov ecx, 10
+ 00000080  8D 1D 0000000C R			lea ebx, array	;move ebx to first address
+ 00000086			check:	
+ 00000086  E8 0000003A				call compare
+ 0000008B  83 C3 04				add ebx, 4	;inc ebx to next box
+ 0000008E  E2 F6				loop check
+
+						dtoa    sum, count  ; convert to ASCII characters
+				        output  resultLbl, sum  ; output label and sum
+
+
+ 000000C5			compare PROC
+ 000000C5  3B 03			cmp eax,[ebx]		;cmp user input and array number
+ 000000C7  74 01			jz match		;jmp to match to inc the count
+ 000000C9  C3				ret
+ 000000CA  FF 05 00000008 R	match: inc count	;inc count
+ 000000D0  C3					ret	;return back to main
+ 000000D1			compare ENDP
+ 000000D1			_MainProc ENDP
+				END                             ; end of source code
+Microsoft (R) Macro Assembler Version 14.23.28105.4	    05/20/20 15:06:01
+IOExample.asm						     Symbols 2 - 1
+
+
+
+
+Macros:
+
+                N a m e                 Type
+
+atod . . . . . . . . . . . . . .	Proc
+atow . . . . . . . . . . . . . .	Proc
+dtoa . . . . . . . . . . . . . .	Proc
+input  . . . . . . . . . . . . .	Proc
+output . . . . . . . . . . . . .	Proc
+wtoa . . . . . . . . . . . . . .	Proc
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00001046 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000000D1 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_MainProc  . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 000000D1 Public
+  create . . . . . . . . . . . .	L Near	 0000000B _TEXT	
+  check  . . . . . . . . . . . .	L Near	 00000086 _TEXT	
+compare  . . . . . . . . . . . .	P Near	 000000C5 _TEXT	Length= 0000000C Public
+  match  . . . . . . . . . . . .	L Near	 000000CA _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+_getInput  . . . . . . . . . . .	L Near	 00000000 FLAT	External
+_showOutput  . . . . . . . . . .	L Near	 00000000 FLAT	External
+array  . . . . . . . . . . . . .	DWord	 0000000C _DATA	
+atodproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+atowproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+count  . . . . . . . . . . . . .	DWord	 00000008 _DATA	
+dtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+noleap . . . . . . . . . . . . .	Byte	 00001022 _DATA	
+number1  . . . . . . . . . . . .	DWord	 00000000 _DATA	
+number2  . . . . . . . . . . . .	DWord	 00000004 _DATA	
+prompt1  . . . . . . . . . . . .	Byte	 00000FAC _DATA	
+prompt2  . . . . . . . . . . . .	Byte	 00000FBB _DATA	
+resultLbl  . . . . . . . . . . .	Byte	 00001008 _DATA	
+string . . . . . . . . . . . . .	Byte	 00000FE0 _DATA	
+sum  . . . . . . . . . . . . . .	Byte	 0000103A _DATA	
+wtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+
+	   0 Warnings
+	   0 Errors
