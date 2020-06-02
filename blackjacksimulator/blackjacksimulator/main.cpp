@@ -19,7 +19,7 @@ using namespace std;
 //here
 const int numset = 4; //how many set of card will be use
 double percent = 0.65;//how many cards used before before shuffling
-int gamenum = 100000; //how many games you want
+int gamenum = 1000000; //how many games you want
 //function
 //function
 //function
@@ -70,7 +70,7 @@ double playercount = 0;
 double dealercount = 0;
 double basebet=1;//bet value
 int gamecount, positive,checkdouble;//count in intdis()
-double playerwin, dealerwin, tiegame, split, doublerate;
+float playerwin, dealerwin, tiegame, split, doublerate;
 int gg=0;
 int lastgame = 0;
 int maxmoney=0;
