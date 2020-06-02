@@ -70,7 +70,7 @@ double playercount = 0;
 double dealercount = 0;
 double basebet=1;//bet value
 int gamecount, positive,checkdouble;//count in intdis()
-float playerwin, dealerwin, tiegame, split, doublerate;
+double playerwin, dealerwin, tiegame, split, doublerate;
 int gg=0;
 int lastgame = 0;
 int maxmoney=0;
