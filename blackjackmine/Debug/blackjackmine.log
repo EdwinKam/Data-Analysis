@@ -1,0 +1,9 @@
+﻿  blackjack.cpp
+C:\Users\kamsh\Desktop\blackjackmine\blackjack.cpp(110,20): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\kamsh\Desktop\blackjackmine\blackjack.cpp(221,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\kamsh\Desktop\blackjackmine\blackjack.cpp(222,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\kamsh\Desktop\blackjackmine\blackjack.cpp(399): warning C4715: 'paction': not all control paths return a value
+C:\Users\kamsh\Desktop\blackjackmine\blackjack.cpp(470): warning C4715: 'aceaction': not all control paths return a value
+C:\Users\kamsh\Desktop\blackjackmine\blackjack.cpp(562): warning C4715: 'splitaction': not all control paths return a value
+C:\Users\kamsh\Desktop\blackjackmine\blackjack.cpp(761): warning C4715: 'display': not all control paths return a value
+  blackjackmine.vcxproj -> C:\Users\kamsh\Desktop\blackjackmine\Debug\blackjackmine.exe
