@@ -3,7 +3,7 @@
 //  blackjacksimulator
 //
 //  Created by Edwin Kam on 6/1/20.
-//  Copyright © 2020 Catherine. All rights reserved.
+//  Copyright © 2020 Edwin. All rights reserved.
 //
 
 //6/1/2020 version
@@ -13,13 +13,14 @@
 #include<stack>
 #include<random>
 #include<algorithm>
+#include <iomanip>
 
 
 using namespace std;
 //here
 const int numset = 4; //how many set of card will be use
 double percent = 0.65;//how many cards used before before shuffling
-int gamenum = 1000000; //how many games you want
+int gamenum = 1000; //how many games you want
 //function
 //function
 //function
@@ -87,7 +88,7 @@ int main()
         cardcount = 1;
         positive = 0;//initial posivity
         do {
-            cout << "===================New Game==================\n";
+            cout << "====================New Game===================\n";
             cout << "Game " << gamecount + 1 << endl;
             intialhands(player,psize);
             intialhands(dealer,dsize);
@@ -150,8 +151,9 @@ int main()
                 bet[handscount] = bet[handscount] * 1.5;
                 cout << "Player gets $" << bet[handscount] << endl;
             }
-            else if (!blackjack(dealer, "Dealer", 0)&&!blackjack(player, "Player", handscount))//if dealer no blackjack
+            else if (!blackjack(dealer, "Dealer", 0)&&!blackjack(player, "Player", handscount))//if dealer no blackjack and player no blackjack
             {
+                cout << "-----------------Call section-----------------\n";
                 if (player[handscount * 10 + 0] == player[handscount * 10 + 1] && player[handscount * 10 + 0] < 10)//pairs except 10
                 {
                     //cout << "!!!!!!!!!!!!!!!!!!";
@@ -196,7 +198,7 @@ int main()
     cout << "Split game : " << split << "\tSplit rate: " << split / gamecount << endl;
     cout << "Player win: $ " << playercount << "\tDealer win: $ " << dealercount << endl;
     cout << "Player net winning: $" << playercount - dealercount << endl;
-    cout << "Player max win $" <<maxmoney<<"\t Player max lose: $" <<leastmoney<<endl;
+    cout << gg<< "Player max win $" <<maxmoney<<"\t Player max lose: $" <<leastmoney<<endl;
 
 }
 void start()
@@ -208,7 +210,7 @@ void start()
     if (blackjack(player, "Player", handscount) && !blackjack(dealer, "Dealer",0))
     {
         cout << "Dealer no blackjack\n";
-        bet[handscount] = bet[handscount] * 1.5;
+        //bet[handscount] = bet[handscount] * 1.5;
         cout << "Player gets $" << bet[handscount] << endl;
     }
     else if (blackjack(dealer, "Dealer",0) && !blackjack(player, "Player", handscount))
@@ -280,7 +282,11 @@ void print(int* arr, const int numset)
     int totalcard = numset * 52;
     for (int i = 1; i <= totalcard; i++)
     {
-        assert (arr[i]!=0);
+        if (arr[i]==0)
+        {
+            cout<<"error8";
+            cin>>gg;
+        }
         cout <<display(arr[i]) << " ";
 
         }
@@ -595,7 +601,7 @@ void play(int action)//1hit 2double 3stand 4split 5splithit
     switch (action)
     {
     case 1: //hit
-        cout << "*******" << handscount + 1 << "player called hit" << endl;
+        cout  << handscount + 1 << "player called hit" << endl;
         player[++playerhandcount] = intdis();//distribute from play[2]
         psum = sum(player, handscount);//player sum
         coutcard(player, "Player", handscount);//display card;
@@ -631,7 +637,7 @@ void play(int action)//1hit 2double 3stand 4split 5splithit
         doublerate++;
         checkdouble = 1;//double flag
         bet[handscount] = bet[handscount] * 2;//double the bet
-        cout << "*******" << handscount + 1 << "player called double" << endl;
+        cout << handscount + 1 << "player called double" << endl;
         cout << "$$bet of $" << bet[handscount] << endl;
         player[handscount * 10 + 2] = intdis();
         acevalue(player, handscount);//determine ace value
@@ -639,14 +645,14 @@ void play(int action)//1hit 2double 3stand 4split 5splithit
         pbust(player);//check player busts
         break;
     case 3://stand
-        cout << "*******" << handscount + 1 << "player called stand" << endl;
+        cout << handscount + 1 << "player called stand\t\t\t" <<handscount +1<< "Player sum: " << sum(player, handscount) << endl;
         acevalue(player, handscount);
         //coutcard(player, "Player",handscount);
 
         break;
     case 4:{ //split
-        cout << "((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((" << endl;
-        cout << "*******" << handscount + 1 << "player called split" << endl;
+        cout << "((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((" << endl;
+        cout << handscount + 1 << "player called split" << endl;
         int i = 0;
         split++;
         while (player[i * 10] != 0)
@@ -669,7 +675,7 @@ void play(int action)//1hit 2double 3stand 4split 5splithit
         //handscount--;//next hand
         start();//finish first hand
         handscount = i;//next hand
-        cout << handscount + 1 << "Player turn---" << endl;
+        cout << "----------------"<<handscount + 1 << "Player turn-----------------" << endl;
         coutcard(player, "Player", handscount);//display second hand
         //cout << "count" << handscount << endl;
         playerhandcount = 1 + i * 10;//make sure disturebute to next stack
@@ -698,7 +704,7 @@ void dealeraction()
         if (checkbust == 1)//dealer needs action
         {
             if (dealerflag == 1) {
-                cout << "--------------\nDealer turn\n";
+                cout << "----------------Dealer turn-------------------\n";
                 coutcard(dealer, "Dealer", 0);
                 dealerflag = 0;//set dealer flag to 0 so it wouldnt display again
             }
@@ -831,7 +837,7 @@ void coutcard(int* arr, string name,int hand)
             cout << display(arr[i]) << ", ";
         }
     }
-    cout << "\t" << name << " sum: " << sum(arr, hand) << endl;
+    cout << "\t\t\t" <<hand +1<< name << " sum: " << sum(arr, hand) << endl;
 }
 
 bool checkace(int* arr,int hand)
@@ -865,20 +871,21 @@ void acevalue(int* arr, int hand)
 void result()
 {
     int trystack = 0;//try from array[0]
+    cout<<endl;
     while (player[trystack*10] != 0) {
         if (sum(player, trystack) < 22 && sum(dealer, 0) < 22) {
             if (sum(player, trystack) > sum(dealer, 0))
             {
                 cout << "========" << trystack  + 1 << "Player won!!!!!" << endl;
                 playerwin++;
-                cout << "$win: " <<bet[trystack] << endl;
+                cout <<trystack  + 1<<"Player win: $" <<bet[trystack] << endl;
                 playercount += bet[trystack];//player get the bet
             }
-            else     if (sum(player, trystack) < sum(dealer, 0))
+            else if (sum(player, trystack) < sum(dealer, 0))
             {
                 cout << "========"<< trystack + 1<<"Dealer won!!!!!" << endl;
                 dealerwin++;
-                cout << "$lose: " << bet[trystack ] << endl;
+                cout <<trystack  + 1<< "Player lose: $" << bet[trystack ] << endl;
                 dealercount += bet[trystack];//dealer gets the bet
             }
             else
@@ -888,8 +895,27 @@ void result()
             }
 
         }
+        else //one of them busted
+            //no dealer or player++ because counted at pbust()
+        {
+            if (sum(player, trystack) >21)//if player bust
+            {
+                cout << "========"<< trystack + 1<<"Dealer won!!!!!" << endl;
+                cout <<trystack  + 1<< "Player lose: $" << bet[trystack ] << endl;
+            }
+            else if (sum(dealer, 0)>21)//dealer busted
+            {
+                cout << "========" << trystack  + 1 << "Player won!!!!!" << endl;
+                cout <<trystack  + 1<<"Player win: $" <<bet[trystack] << endl;
+            }
+            else{//catch error
+                cout << "error7";
+                cin >>gg;
+            }
+        }
         trystack ++;//inc
     }
+    cout << "----------------------------------------------\n";
 }
 
 
@@ -897,12 +923,20 @@ void dbust(int* arr)
 {
     if (sum(arr, 0) > 21)
     {
-        cout << "==== Dealerbusts >21" << endl;
-        cout << "=========Player won!!!!!" << endl;
+        cout << "Dealerbusts >21" << endl;
+        //cout << "=========Player won!!!!!" << endl;
         playerwin++;
+        if (handscount>=1)
+        {
+            handscount--;//becasue I inc handscount in split
+        }
         for (int i = 0; i < handscount+1; i++) {
             playercount += bet[i];//in case if player doubles
             cout << i + 1 << "player wins: $" << bet[i]<<endl;
+            if(i==1)
+            {
+                gg= gamecount;
+            }
         }
     }
 
@@ -912,8 +946,8 @@ void pbust(int* arr)
 {
     if (sum(arr, handscount) > 21)
     {
-        cout << "== Playerbusts >21" << endl;
-        cout << "==========Dealer won!!!!!" << endl;
+        cout << "Playerbusts >21" << endl;
+        //cout << "==========Dealer won!!!!!" << endl;
         dealercount += bet[handscount];//in case if player doubles
         cout << handscount + 1 << "player loses: $" << bet[handscount] << endl;//display before set the bet to 0
         bet[handscount] = 0;
