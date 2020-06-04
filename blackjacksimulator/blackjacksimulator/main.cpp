@@ -6,7 +6,7 @@
 //  Copyright © 2020 Edwin. All rights reserved.
 //
 
-//6/1/2020 version
+//6/4/2020 version
 #include<iostream>
 #include<ctime>
 #include<string>
@@ -18,9 +18,9 @@
 
 using namespace std;
 //here
-const int numset = 4; //how many set of card will be use
+const int numset = 2; //how many set of card will be use
 double percent = 0.65;//how many cards used before before shuffling
-int gamenum = 1000; //how many games you want
+int gamenum = 200000; //how many games you want
 //function
 //function
 //function
@@ -49,6 +49,7 @@ void intialhands(int*,int);//initialize player hands
 bool blackjack(int*, string,int);//determine if anyone gets blackjack
 void start();
 void setbet(int);
+
 //function
 //function
 //function
@@ -76,7 +77,8 @@ int gg=0;
 int lastgame = 0;
 int maxmoney=0;
 int leastmoney=0;
-
+int pan= 0;
+int save[100000];
 int main()
 {
     create(poker, numset);
@@ -199,6 +201,11 @@ int main()
     cout << "Player win: $ " << playercount << "\tDealer win: $ " << dealercount << endl;
     cout << "Player net winning: $" << playercount - dealercount << endl;
     cout << gg<< "Player max win $" <<maxmoney<<"\t Player max lose: $" <<leastmoney<<endl;
+    cout <<"Splite game: ";
+    for (int i = pan-1; i>pan-30; i--)
+    {
+        cout << save[i]<<" ";
+    }
 
 }
 void start()
@@ -645,8 +652,9 @@ void play(int action)//1hit 2double 3stand 4split 5splithit
         pbust(player);//check player busts
         break;
     case 3://stand
-        cout << handscount + 1 << "player called stand\t\t\t" <<handscount +1<< "Player sum: " << sum(player, handscount) << endl;
         acevalue(player, handscount);
+        cout << handscount + 1 << "player called stand\t\t\t" <<handscount +1<< "Player sum: " << sum(player, handscount) << endl;
+        
         //coutcard(player, "Player",handscount);
 
         break;
@@ -654,6 +662,7 @@ void play(int action)//1hit 2double 3stand 4split 5splithit
         cout << "((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((" << endl;
         cout << handscount + 1 << "player called split" << endl;
         int i = 0;
+        save[pan++]=gamecount+1;
         split++;
         while (player[i * 10] != 0)
         {
@@ -673,6 +682,7 @@ void play(int action)//1hit 2double 3stand 4split 5splithit
         player[i * 10 + 1] = intdis();//assign second card to second hand
         coutcard(player, "Player", i);//display second hand
         //handscount--;//next hand
+        cout << "----------------"<<handscount + 1 << "Player turn-----------------" << endl;
         start();//finish first hand
         handscount = i;//next hand
         cout << "----------------"<<handscount + 1 << "Player turn-----------------" << endl;
