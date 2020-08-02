@@ -204,7 +204,7 @@ public class Main {
            // System.out.printf("%d ", save[i]);
             i--;
         }
-        System.out.printf("\nGame split 3 times and dealer busted: %d\n", gg+1);
+        System.out.printf("\nAA split game: %d\n", gg+1);
 
 
     }
