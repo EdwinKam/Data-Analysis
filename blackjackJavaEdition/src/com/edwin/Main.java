@@ -1,21 +1,20 @@
 package com.edwin;
-
+import java.io.File;  // Import the File class
+import java.io.FileNotFoundException;
 import java.util.*;
-
 //  Created by Edwin Kam on 7/24/20.
 //  Copyright © 2020 Edwin. All rights reserved.
-//7/26/2020 java version
+//8/6/2020 java version
 public class Main {
     public static final int numset = 2; //how many set of card will be use
     public static double percent = 0.65;//how many cards used before before shuffling
-    public static int gamenum = 300; //how many games you want
-
-
+    public static int gamenum = 30000; //how many games you want
+    
     //function
-//function
-//function
-//string pokerName[1 + totalcard];
-//int pokerValue[1 + totalcard];
+    //function
+    //function
+    //string pokerName[1 + totalcard];
+    //int pokerValue[1 + totalcard];
     public static int cardcount = 1;//distrube card should be always 1
     public static final int totalcard = numset * 52;
     public static int []poker = new int [1 + totalcard];//number of card in play
@@ -36,16 +35,20 @@ public class Main {
     public static double playerwin, dealerwin, tiegame, split, doublerate,lastp,lastd;
     public static int gg=0;
     public static int lastgame = 0;
-    public static int maxmoney=0;
-    public static int leastmoney=0;
+    public static int maxmoney=0,userinput;
+    public static int leastmoney=0, gap=0;
     public static int pan= 0;
     public static int save[]= new int[100];
     public static  boolean back=false;
+    public static Scanner s = new Scanner(System.in);
 
-    Scanner s = new Scanner(System.in);
+
 
     public static void main(String[] args) {
-
+        CreateFile file = new CreateFile("number.txt");
+        System.out.println("Enter 1 = 124, 2 = 1246");
+        System.out.print("Your choice: ");
+        userinput=s.nextInt();
         create(poker, numset);
         //print(poker, numset);
         while (gamecount < gamenum)
@@ -59,57 +62,86 @@ public class Main {
                 System.out.printf("Game %d\n",gamecount + 1);
                 intialhands(player,psize);
                 intialhands(dealer,dsize);
-                if (back){//bet(6)
-                    if (positive>3){
-                        back=true;
-                        setbet(6);
-                        System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
-                        System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                        System.out.println("Last game auto bet6. Next game will also be bet of $6");
-                    }
-                    else{//less than 4 positive
-                        back=false;
-                        setbet(6);
-                        System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
-                        System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                        System.out.println("Since last game bet was $6");
-                    }
-                }
-                else if (positive <= 3)//if current poaitive less than this number, then set bet to ...
-                {
-                    setbet(1);
-                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
-                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                }
-                else //if greater than that positive
-                {
-                    if (lastgame == 1)
-                    {
-                        setbet(2);
-                        System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
-                        System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                    }
-                    else if (lastgame >= 4)
-                    {
-                        back=true;
-                        setbet(6);
-                        System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
-                        System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                        System.out.println("Next game will also be bet of $6");
-                    }
-                    else if (lastgame>=2)
-                    {
-                        //cout<<"6666666";
-                        setbet(4);
-                        System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
-                        System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                    }
-                    else
-                    {
-                        System.out.println("error1");
-                        return;
-                    }
-                }
+                switch (userinput) {
+                    case 1: //124
+                        //only change things in case 1
+                        if (positive <= 3)//if current poaitive less than this number, then set bet to ...
+                        {
+                            setbet(1);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d", positive, lastgame);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                        } else //if greater than that positive
+                        {
+                            if (lastgame == 1) {
+                                setbet(2);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            } else if (lastgame >= 4) {
+                                setbet(6);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            } else if (lastgame >= 2) {
+                                //cout<<"6666666";
+                                setbet(4);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            } else {
+                                System.out.println("error1");
+                                System.exit(0);
+                            }
+                        }
+                            // dont change anything below
+                            break;
+
+                            case 2: //1246
+                                if (back) {//bet(6)
+                                    if (positive > 3) {
+                                        back = true;
+                                        setbet(6);
+                                        System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                        System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                        System.out.println("Last game auto bet6. Next game will also be bet of $6");
+                                    } else {//less than 4 positive
+                                        back = false;
+                                        setbet(6);
+                                        System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                        System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                        System.out.println("Since last game bet was $6");
+                                    }
+                                } else if (positive <= 3)//if current poaitive less than this number, then set bet to ...
+                                {
+                                    setbet(1);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else //if greater than that positive
+                                {
+                                    if (lastgame == 1) {
+                                        setbet(2);
+                                        System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                        System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                    } else if (lastgame >= 4) {
+                                        back = true;
+                                        setbet(6);
+                                        System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                        System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                        System.out.println("Next game will also be bet of $6");
+                                    } else if (lastgame >= 2) {
+                                        //cout<<"6666666";
+                                        setbet(4);
+                                        System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                        System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                    } else {
+                                        System.out.println("error1");
+                                        System.exit(0);
+                                    }
+                                }
+                                break;
+                            default:
+                                System.err.println("User input error");
+                                System.exit(0);
+                        }
+
+
 
                 lastgame = (int)bet[0];
                 player[handscount*10 + 0] = intdis();//disturbiting cards
@@ -172,14 +204,20 @@ public class Main {
                 lastp=playercount;
                 lastd=dealercount;
                 System.out.printf("Player net winning: $%.1f\n", playercount - dealercount);
+                file.record((int)playercount - (int)dealercount);
+                file.recordString("\n");
                 System.out.printf("Positive: %d\n", positive);
-                if (playercount - dealercount>maxmoney)
+
+                if (playercount - dealercount>maxmoney) //if current net win > peak
                 {
-                    maxmoney = (int)playercount - (int)dealercount;
+                    maxmoney = (int)playercount - (int)dealercount; //set new peak
                 }
-                if (playercount - dealercount<leastmoney)
+                else
                 {
-                    leastmoney = (int)playercount - (int)dealercount;
+                    if (maxmoney-(playercount - dealercount)>gap)
+                    {
+                        gap=(int)maxmoney-((int)playercount - (int)dealercount);
+                    }
                 }
                 gamecount++;
             } while (cardcount < totalcard * percent);//how much of the card
@@ -194,10 +232,11 @@ public class Main {
         System.out.format("%-16s:%7.0f    %-10s:%5.2f\n", "TIE game", tiegame,"Tie rate",tiegame / gamecount);
         System.out.format("%-16s:%7.0f    %-10s:%5.2f\n", "Double win game", doublerate,"Double win rate",doublerate / gamecount);
         System.out.format("%-16s:%7.0f    %-10s:%5.2f\n", "Split win game", split,"Split win rate",split / gamecount);
-        System.out.format("%-16s:$%.1f    %-10s:$%.1f\n", "Player wins", playercount,"Dealer wins",dealercount);
+        System.out.format("%-16s: $%.1f    %s: $%.1f\n", "Player wins", playercount,"Dealer wins",dealercount);
         System.out.format("%-16s: $%.0f\n","Player net winning", playercount-dealercount);
-        System.out.format("%-16s: $%d    %-10s:$%d\n", "Player max win", maxmoney,"Player max lose",leastmoney);
+        System.out.format("%-16s: $%d    %-10s:$%d\n", "Player max win", maxmoney,"Player max lose",gap);
         System.out.print("Split game: ");
+        file.close();
         int i=pan-1;
         while(i>pan-10)
         {
@@ -1097,6 +1136,31 @@ public class Main {
         a[j] = t;
     }
 
+
+}
+class CreateFile {
+    private Formatter x;
+    CreateFile(String filename){//open file in constructor
+        openFile(filename);
+    }
+
+    public void openFile(String filename){//create file
+        try{
+            x= new Formatter(filename);
+        }catch(Exception e){
+            System.out.println("You have an error!");
+            System.exit(0);
+        }
+    }
+    public  void record(int number){
+        x.format(Integer.toString(number));
+    }
+    public  void recordString(String string){
+        x.format(string);
+    }
+    public void close(){
+        x.close();
+    }
 
 }
 
