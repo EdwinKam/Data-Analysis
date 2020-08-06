@@ -66,47 +66,52 @@ public class Main {
                 intialhands(player,psize);
                 intialhands(dealer,dsize);
                 switch (userinput) {
-                    case 1: //124
+                    case 1: //124    --------------------------------------------------------------------------------
+                        //124    --------------------------------------------------------------------------------
+                        //124    --------------------------------------------------------------------------------
+                        //124    --------------------------------------------------------------------------------
                         if (positive>4)
                         {
                             setbet(4);
-                            System.out.printf("Current positivity: %d.\tLast game bet was: %d", positive, lastgame);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                             System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
                         }
                         else if (positive>2)
                         {
                             setbet(2);
-                            System.out.printf("Current positivity: %d.\tLast game bet was: %d", positive, lastgame);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                             System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
                         }
                         else
                         {
                             setbet(1);
-                            System.out.printf("Current positivity: %d.\tLast game bet was: %d", positive, lastgame);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                             System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
                         }
-                    case 2: //1246 old version
-                        //only change things in case 1
+                        //------------------------------------------------------------------------------------------
+                    case 2:
+                        //1246 old version-------------------------------------------------------------
+                        //1246 old version-----------------------------------------------------------------------
                         if (positive <= 3)//if current poaitive less than this number, then set bet to ...
                         {
                             setbet(1);
-                            System.out.printf("Current positivity: %d.\tLast game bet was: %d", positive, lastgame);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                             System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
                         }
                         else //if greater than that positive
                         {
                             if (lastgame == 1) {
                                 setbet(2);
-                                System.out.printf("Current positivity: %d.\tLast game bet was: %d", positive, lastgame);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
                             } else if (lastgame >= 4) {
                                 setbet(6);
-                                System.out.printf("Current positivity: %d.\tLast game bet was: %d", positive, lastgame);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
                             } else if (lastgame >= 2) {
                                 //cout<<"6666666";
                                 setbet(4);
-                                System.out.printf("Current positivity: %d.\tLast game bet was: %d", positive, lastgame);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
                             } else {
                                 System.out.println("error1");
