@@ -88,6 +88,7 @@ public class Main {
                             System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                             System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
                         }
+                        break;
                         //------------------------------------------------------------------------------------------
                     case 2:
                         //1246 old version-------------------------------------------------------------
