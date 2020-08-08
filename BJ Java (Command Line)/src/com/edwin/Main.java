@@ -3,7 +3,7 @@ import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;
 import java.util.*;
 //  Created by Edwin Kam on 7/24/20.
-//  Copyright © 2020 Edwin. All rights reserved.
+//  Copyright ©️ 2020 Edwin. All rights reserved.
 //8/6/2020 java version
 public class Main {
     public static final int numset = 2; //how many set of card will be use
@@ -69,23 +69,30 @@ public class Main {
                         //124    --------------------------------------------------------------------------------
                         //124    --------------------------------------------------------------------------------
                         //124    --------------------------------------------------------------------------------
-                        if (positive>4)
-                        {
-                            setbet(4);
-                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
-                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                        }
-                        else if (positive>2)
-                        {
-                            setbet(2);
-                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
-                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                        }
-                        else
+                        if (positive <= 3)//if current poaitive less than this number, then set bet to ...
                         {
                             setbet(1);
                             System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                             System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                        }
+                        else //if greater than that positive
+                        {
+                            if (lastgame == 1) {
+                                setbet(2);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            } else if (lastgame == 4) {
+                                setbet(4);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            } else if (lastgame == 2) {
+                                setbet(4);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            } else {
+                                System.err.println("error1");
+                                System.exit(0);
+                            }
                         }
                         break;
                     //------------------------------------------------------------------------------------------
@@ -104,24 +111,52 @@ public class Main {
                                 setbet(2);
                                 System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                            } else if (lastgame >= 4) {
+                            } else if (lastgame == 4) {
                                 setbet(6);
                                 System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                            } else if (lastgame >= 2) {
+                            } else if (lastgame == 2) {
                                 //cout<<"6666666";
                                 setbet(4);
                                 System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
                             } else {
-                                System.out.println("error1");
+                                System.err.println("error1");
                                 System.exit(0);
                             }
                         }
                         // dont change anything below
                         break;
-                    case 3: //1246
-                        if (back) {//bet(6)
+                    case 3: 
+                        /////138
+                        if (positive <= 3)//if current poaitive less than this number, then set bet to ...
+                    {
+                        setbet(1);
+                        System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                        System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                    }
+                    else //if greater than that positive
+                    {
+                        if (lastgame == 1) {
+                            setbet(3);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                        } else if (lastgame == 4) {
+                            setbet(8);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                        } else if (lastgame == 2) {
+                            //cout<<"6666666";
+                            setbet(8);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                        } else {
+                            System.err.println("error1");
+                            System.exit(0);
+                        }
+                    }
+                    case 4: //1246
+                        if (back) {//bet(6) back= last game over bet
                             if (positive > 3) {
                                 back = true;
                                 setbet(6);
@@ -320,7 +355,7 @@ public class Main {
             arr[i] = temp;
             // System.out.printf("%d ", i);
         }
-        System.out.println("\n****Shuffling******");
+        System.out.println("\n***Shuffling***");
     }
 
     public static void create(int[] poker, final int numset)
@@ -401,20 +436,20 @@ public class Main {
             case 7:
             case 8:
             {
-                //cout << "*******player called hit" << endl;
+                //cout << "***player called hit" << endl;
                 return 1;
             }
             //break;
             case 9:
                 if (value(dealer[0]) <= 6 && value(dealer[0]) > 2)
                 {
-                    //cout << "*******player called double" << endl;
+                    //cout << "***player called double" << endl;
                     return 2;
 
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
 
@@ -422,13 +457,13 @@ public class Main {
             case 10:
                 if (value(dealer[0]) <= 9 && value(dealer[0]) > 1)
                 {
-                    //cout << "*******player called double" << endl;
+                    //cout << "***player called double" << endl;
                     return 2;
 
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
 
@@ -439,12 +474,12 @@ public class Main {
                     return 3;
                 else if (value(dealer[0]) > 1)
                 {
-                    //cout << "*******player called double" << endl;
+                    //cout << "***player called double" << endl;
                     return 2;
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
 
@@ -452,13 +487,13 @@ public class Main {
             case 12:
                 if (value(dealer[0]) >= 4 && value(dealer[0]) <= 6)
                 {
-                    //cout << "*******player called stand" << endl;
+                    //cout << "***player called stand" << endl;
                     return 3;
 
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
 
@@ -469,13 +504,13 @@ public class Main {
             case 16:
                 if (value(dealer[0]) <= 6 && value(dealer[0]) > 1)
                 {
-                    //cout << "*******player called stand" << endl;
+                    //cout << "***player called stand" << endl;
                     return 3;
 
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
 
@@ -486,7 +521,7 @@ public class Main {
             case 20:
             case 21:
             {
-                //cout << "*******player called stand" << endl;
+                //cout << "***player called stand" << endl;
                 return 3;
             }
 
@@ -509,12 +544,12 @@ public class Main {
             case 3:
                 if (value(dealer[0]) <= 4 || value(dealer[0]) >= 7)//1-4, 7-10
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
                 else
                 {
-                    //cout << "*******player called double" << endl;
+                    //cout << "***player called double" << endl;
                     return 2;
                 }
                 //   break;
@@ -522,47 +557,47 @@ public class Main {
             case 5:
                 if (value(dealer[0]) <= 3 || value(dealer[0]) >= 7)//1-3,7-10
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
                 else
                 {
-                    //cout << "*******player called double" << endl;
+                    //cout << "***player called double" << endl;
                     return 2;
                 }
                 // break;
             case 6:
                 if (value(dealer[0]) >= 3 && value(dealer[0]) <= 6)//3-6
                 {
-                    //cout << "*******player called double" << endl;
+                    //cout << "***player called double" << endl;
                     return 2;
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
                 // break;
             case 7:
                 if (value(dealer[0]) == 9 || value(dealer[0]) == 10 || value(dealer[0]) == 1)//9, 10 , 1
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
                 else if (value(dealer[0]) == 2 || value(dealer[0]) == 7 || value(dealer[0]) == 8)//2, 7 , 8
                 {
-                    //cout << "*******player called stand" << endl;
+                    //cout << "***player called stand" << endl;
                     return 3;
                 }
                 else
                 {
-                    //cout << "*******player called double" << endl;
+                    //cout << "***player called double" << endl;
                     return 2;
                 }
                 // break;
             case 8:
             case 9:
-            case 10: //cout << "*******player called stand" << endl;
+            case 10: //cout << "***player called stand" << endl;
                 return 3;
             //break;
             default:
@@ -579,83 +614,83 @@ public class Main {
         switch (hand)
         {
             case 1:
-                //cout << "*******player called split" << endl;
+                //cout << "***player called split" << endl;
                 return 5;
             // break;
             case 2:
             case 3:
                 if (value(dealer[0]) >= 4 && value(dealer[0]) <= 7)
                 {
-                    //cout << "*******player called split" << endl;
+                    //cout << "***player called split" << endl;
                     return 4;
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
                 // break;
             case 4:
                 if (value(dealer[0]) >= 5 && value(dealer[0]) <= 6)
                 {
-                    //cout << "*******player called split" << endl;
+                    //cout << "***player called split" << endl;
                     return 4;
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
             case 5:
                 if (value(dealer[0]) == 1 || value(dealer[0]) == 10)
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
                 else
                 {
-                    //cout << "*******player called double" << endl;
+                    //cout << "***player called double" << endl;
                     return 2;
                 }
                 // break;
             case 6:
                 if (value(dealer[0]) >= 2 && value(dealer[0]) <= 6)
                 {
-                    //cout << "*******player called split" << endl;
+                    //cout << "***player called split" << endl;
                     return 4;
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
                 // break;
             case 7:
                 if (value(dealer[0]) >= 2 && value(dealer[0]) <= 7)
                 {
-                    //cout << "*******player called split" << endl;
+                    //cout << "***player called split" << endl;
                     return 4;
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
                 // break;
             case 8:
-                //cout << "*******player called split" << endl;
+                //cout << "***player called split" << endl;
                 return 4;
             //break;
 
             case 9:
                 if (value(dealer[0]) == 7 || value(dealer[0]) == 10 || value(dealer[0]) == 1)
                 {
-                    //    cout << "*******player called stand" << endl;
+                    //    cout << "***player called stand" << endl;
                     return 3;
                 }
                 else
                 {
-                    //cout << "*******player called split" << endl;
+                    //cout << "***player called split" << endl;
                     return 4;
                 }
                 //  break;
@@ -1160,4 +1195,3 @@ public class Main {
 
 
 }
-
