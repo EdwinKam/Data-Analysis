@@ -8,7 +8,7 @@ import java.util.*;
 public class Main {
     public static final int numset = 2; //how many set of card will be use
     public static double percent = 0.65;//how many cards used before before shuffling
-    public static int gamenum = 3000000; //how many games you want
+    public static int gamenum = 300; //how many games you want
 
     //function
     //function
@@ -45,10 +45,11 @@ public class Main {
 
 
     public static void main(String[] args) {
-        System.out.println("Enter 1 = 124, 2 = 1246 old version, 3 = 1246 new verison");
-
-        while(userinput<1||userinput>3) {
-            System.out.print("Your choice (1-3): ");
+        System.out.println("Enter 1 = 124, 2 = 1246, 3 = 138");
+        System.out.println("--------below 80------------------------");
+        System.out.println("Enter 4 = 124, 5 = 1246, 6 = 138");
+        while(userinput<1||userinput>6) {
+            System.out.print("Your choice (1-6): ");
             userinput = s.nextInt();
         }
         create(poker, numset);
@@ -141,21 +142,130 @@ public class Main {
                             setbet(3);
                             System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                             System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                        } else if (lastgame == 4) {
+                        } else if (lastgame == 8) {
                             setbet(8);
                             System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                             System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                        } else if (lastgame == 2) {
+                        } else if (lastgame == 3) {
                             //cout<<"6666666";
                             setbet(8);
                             System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                             System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
                         } else {
-                            System.err.println("error1");
+                            System.err.println("error1 in case 3");
                             System.exit(0);
                         }
-                    }
-                    case 4: //1246
+                    }break;
+                    case 4: //124    --------------------------------------------------------------------------------
+                        //124    --------------------------------------------------------------------------------
+                        //124    --------------------------------------------------------------------------------
+                        //124    --------------------------------------------------------------------------------
+                        if(positive>=3) //if greater than that positive
+                        {
+                            if (positive==3&&cardcount<=22)
+                            {
+                                setbet(1);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            }
+                            else {
+                                if (lastgame == 1) {
+                                    setbet(2);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 4) {
+                                    setbet(4);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 2) {
+                                    setbet(4);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else {
+                                    System.err.println("error1");
+                                    System.exit(0);
+                                }
+                            }
+                        }else//positive <3
+                        {
+                                setbet(1);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                        }
+                        break;
+                    //------------------------------------------------------------------------------------------
+                    case 5:
+                        //1246 old version-------------------------------------------------------------
+                        //1246 old version-----------------------------------------------------------------------
+                        if(positive>=3) //if greater than that positive
+                        {
+                            if (positive==3&&cardcount<=22)
+                            {
+                                setbet(1);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            }
+                            else {
+                                if (lastgame == 1) {
+                                    setbet(2);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 4||lastgame == 6) {
+                                    setbet(6);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 2) {
+                                    setbet(4);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else {
+                                    System.err.println("error1");
+                                    System.exit(0);
+                                }
+                            }
+                        }else//positive <3
+                        {
+                            setbet(1);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                        }
+                        break;
+                    case 6:
+                        /////138
+                        if(positive>=3) //if greater than that positive
+                        {
+                            if (positive==3&&cardcount<=22)
+                            {
+                                setbet(1);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            }
+                            else {
+                                if (lastgame == 1) {
+                                    setbet(3);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 8) {
+                                    setbet(8);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 3) {
+                                    setbet(8);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else {
+                                    System.err.println("error1 in case 6");
+                                    System.exit(0);
+                                }
+                            }
+                        }else//positive <3
+                        {
+                            setbet(1);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+
+                        }break;
+                    case 7: //1246
                         if (back) {//bet(6) back= last game over bet
                             if (positive > 3) {
                                 back = true;
@@ -202,7 +312,7 @@ public class Main {
                 }
 
 
-
+                System.out.println("Card left: "+(totalcard-cardcount));
                 lastgame = (int)bet[0];
                 player[handscount*10 + 0] = intdis();//disturbiting cards
                 player[handscount*10 + 1] = intdis();
