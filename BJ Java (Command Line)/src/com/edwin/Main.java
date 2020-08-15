@@ -6,7 +6,7 @@ import java.util.*;
 //  Copyright ©️ 2020 Edwin. All rights reserved.
 //8/6/2020 java version
 public class Main {
-    public static final int numset = 2; //how many set of card will be use
+    public static  int numset = 2; //how many set of card will be use
     public static double percent = 0.65;//how many cards used before before shuffling
     public static int gamenum = 300; //how many games you want
 
@@ -16,7 +16,7 @@ public class Main {
     //string pokerName[1 + totalcard];
     //int pokerValue[1 + totalcard];
     public static int cardcount = 1;//distrube card should be always 1
-    public static final int totalcard = numset * 52;
+    public static int totalcard = numset * 52;
     public static int []poker = new int [1 + totalcard];//number of card in play
     public static int []shuffnum= new int [totalcard];
     public static int []dealer =new int [10];
@@ -43,14 +43,21 @@ public class Main {
     public static Scanner s = new Scanner(System.in);
 
 
-
     public static void main(String[] args) {
         System.out.println("Enter 1 = 124, 2 = 1246, 3 = 138");
         System.out.println("--------below 80------------------------");
         System.out.println("Enter 4 = 124, 5 = 1246, 6 = 138");
-        while(userinput<1||userinput>6) {
-            System.out.print("Your choice (1-6): ");
+        System.out.println("--------below 80------------------------");
+        System.out.println("Enter 7 = six deck");
+        while(userinput<1||userinput>7) {
+            System.out.print("Your choice (1-7): ");
             userinput = s.nextInt();
+        }
+        if(userinput==7){
+            numset=6;       //change to play 6 pack
+            percent=0.2;        //when 1.5 pack left
+            totalcard=numset*52;
+            poker=new int[1+totalcard];
         }
         create(poker, numset);
         //print(poker, numset);
@@ -265,7 +272,54 @@ public class Main {
                             System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
 
                         }break;
-                    case 7: //1246
+                    case 7:
+                        /////6 pack
+                        Double p = new Double(positive);
+                        Double cardleft= new Double(totalcard-cardcount+1);
+                        double packleft = cardleft/52;
+                        System.out.printf("Positive: %d, Deck: %.2f, Positive/Deck= %.2f\n", positive,packleft,p/packleft);
+                        if(positive/packleft>1.5){
+                            setbet(20);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                        }else{
+                            setbet(1);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                        }
+                        /*
+                        if(positive>=3) //if greater than that positive
+                        {
+                            if (positive==3&&cardcount<=22)
+                            {
+                                setbet(1);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            }
+                            else {
+                                if (lastgame == 1) {
+                                    setbet(3);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 8) {
+                                    setbet(8);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 3) {
+                                    setbet(8);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else {
+                                    System.err.println("error1 in case 6");
+                                    System.exit(0);
+                                }
+                            }
+                        }else//positive <3
+                        {
+                            setbet(1);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+*/
+                        break;
+                    case 8: //1246
                         if (back) {//bet(6) back= last game over bet
                             if (positive > 3) {
                                 back = true;
@@ -312,7 +366,7 @@ public class Main {
                 }
 
 
-                System.out.println("Card left: "+(totalcard-cardcount));
+                System.out.println("Card left: "+(totalcard-cardcount+1));//+1 because cardcount was int = 1
                 lastgame = (int)bet[0];
                 player[handscount*10 + 0] = intdis();//disturbiting cards
                 player[handscount*10 + 1] = intdis();
@@ -468,7 +522,7 @@ public class Main {
         System.out.println("\n***Shuffling***");
     }
 
-    public static void create(int[] poker, final int numset)
+    public static void create(int[] poker, int numset)
     {
         poker[0] = 0;
         for (int i = 0; i < 4 * numset; i++)//new set of card
@@ -490,12 +544,12 @@ public class Main {
         }//for
     }
 
-    public static void print(int[] arr, final int numset)
+    public static void print(int[] arr, int numset)
     {
         //cout << "  " << numset << " set of card in play. Shuffled deck: ";
         System.out.printf("   %d set of card in play. Shuffled deck: ", numset);
-        int totalcard = numset * 52;
-        for (int i = 1; i <= totalcard; i++)
+        int totalcard1 = numset * 52+1;
+        for (int i = 1; i < totalcard1; i++)
         {
             if (arr[i]==0)
             {
@@ -521,7 +575,7 @@ public class Main {
 
     public static int intdis()
     {
-        if (poker[cardcount] <= 7 && poker[cardcount] >= 2)//2-6 positive
+        if (poker[cardcount] <= 6 && poker[cardcount] >= 2)//2-6 positive
         {
             positive++;
         }
