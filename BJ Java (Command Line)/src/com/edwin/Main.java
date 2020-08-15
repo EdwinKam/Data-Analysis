@@ -7,8 +7,8 @@ import java.util.*;
 //8/6/2020 java version
 public class Main {
     public static  int numset = 2; //how many set of card will be use
-    public static double percent = 0.65;//how many cards used before before shuffling
-    public static int gamenum = 300; //how many games you want
+    //public static double percent = 0.65;//how many cards used before before shuffling
+    public static int gamenum = 30000; //how many games you want
 
     //function
     //function
@@ -41,6 +41,7 @@ public class Main {
     public static int save[]= new int[100];
     public static  boolean back=false;
     public static Scanner s = new Scanner(System.in);
+    public static int b20=0,w20=0;
 
 
     public static void main(String[] args) {
@@ -53,11 +54,14 @@ public class Main {
             System.out.print("Your choice (1-7): ");
             userinput = s.nextInt();
         }
+        double percent;
         if(userinput==7){
             numset=6;       //change to play 6 pack
-            percent=0.2;        //when 1.5 pack left
+            percent=0.75;        //when 1.5 pack left
             totalcard=numset*52;
             poker=new int[1+totalcard];
+        }else{
+            percent=0.65;
         }
         create(poker, numset);
         //print(poker, numset);
@@ -457,7 +461,7 @@ public class Main {
         System.out.format("%-16s: $%.1f    %s: $%.1f\n", "Player wins", playercount,"Dealer wins",dealercount);
         System.out.format("%-16s: $%.0f\n","Player net winning", playercount-dealercount);
         System.out.format("%-16s: $%d    %-10s:$%d\n", "Player max win", maxmoney,"Player max lose",gap);
-        System.out.print("Split game: ");
+        System.out.printf("bet20: %d  win20: %d\n",b20,w20);
         int i=pan-1;
         while(i>pan-10)
         {
@@ -1188,7 +1192,16 @@ public class Main {
 
         }
     }
-
+    public static void count20(int i){
+        if(bet[i]>=20){
+            b20++;
+        }
+    }
+    public static void win20(int i){
+        if(bet[i]>=20){
+            w20++;
+        }
+    }
     public static void result()
     {
         int itrystack = 0;//try from array[0]
@@ -1196,6 +1209,8 @@ public class Main {
             System.out.print("[FINAL]");
             coutcard(player, "Player", itrystack);
             itrystack++;
+            count20(itrystack);
+
         }
         System.out.print("[FINAL]");
         coutcard(dealer, "Dealer", 0);
@@ -1207,6 +1222,7 @@ public class Main {
                 {
                     System.out.printf("======%dPlayer win!!!!!\n",trystack  + 1 );
                     playerwin++;
+                    win20(trystack);
                     System.out.printf("%dPlayer win: $ %.1f\n",trystack  + 1,bet[trystack]);
                     playercount += bet[trystack];//player get the bet
                 }
@@ -1216,6 +1232,7 @@ public class Main {
                     playerwin++;
                     System.out.printf("%dPlayer win: $ %.1f\n",trystack  + 1,bet[trystack]);
                     playercount += bet[trystack];//player get the bet
+                    win20(trystack);
                 }
                 else if (sum(player, trystack) < sum(dealer, 0))
                 {
@@ -1246,6 +1263,7 @@ public class Main {
                     System.out.printf("======%dDealer busted!!!!!\n",trystack  + 1 );
                     System.out.printf("%dPlayer get: $ %.1f\n",trystack  + 1,bet[trystack]);
                     playercount += bet[trystack];//player get the bet
+                    win20(trystack);
                 }
                 else{//catch error
                     System.err.println("error7");
