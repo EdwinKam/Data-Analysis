@@ -8,7 +8,7 @@ import java.util.*;
 public class Main {
     public static  int numset = 2; //how many set of card will be use
     //public static double percent = 0.65;//how many cards used before before shuffling
-    public static int gamenum = 30000; //how many games you want
+    public static int gamenum = 3000000; //how many games you want
 
     //function
     //function
@@ -640,15 +640,10 @@ public class Main {
             case 11:
                 if (blackjack(player, "Player", handscount))
                     return 3;
-                else if (value(dealer[0]) > 1)
+                else
                 {
                     //cout << "***player called double" << endl;
                     return 2;
-                }
-                else
-                {
-                    //cout << "***player called hit" << endl;
-                    return 1;
                 }
 
                 // break;
@@ -1245,6 +1240,7 @@ public class Main {
                 {
                     System.out.printf("======%dTIE game\n",trystack  + 1 );
                     tiegame++;
+                    b20--;
                 }
 
             }

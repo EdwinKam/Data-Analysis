@@ -3,11 +3,11 @@ import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;
 import java.util.*;
 //  Created by Edwin Kam on 7/24/20.
-//  Copyright © 2020 Edwin. All rights reserved.
+//  Copyright ©️ 2020 Edwin. All rights reserved.
 //8/6/2020 java version
 public class Main {
-    public static final int numset = 2; //how many set of card will be use
-    public static double percent = 0.65;//how many cards used before before shuffling
+    public static  int numset = 2; //how many set of card will be use
+    //public static double percent = 0.65;//how many cards used before before shuffling
     public static int gamenum = 3000000; //how many games you want
 
     //function
@@ -16,7 +16,7 @@ public class Main {
     //string pokerName[1 + totalcard];
     //int pokerValue[1 + totalcard];
     public static int cardcount = 1;//distrube card should be always 1
-    public static final int totalcard = numset * 52;
+    public static int totalcard = numset * 52;
     public static int []poker = new int [1 + totalcard];//number of card in play
     public static int []shuffnum= new int [totalcard];
     public static int []dealer =new int [10];
@@ -41,16 +41,28 @@ public class Main {
     public static int save[]= new int[100];
     public static  boolean back=false;
     public static Scanner s = new Scanner(System.in);
-
+    public static int b20=0,w20=0;
 
 
     public static void main(String[] args) {
         CreateFile file = new CreateFile("number.txt");
-        System.out.println("Enter 1 = 124, 2 = 1246 old version, 3 = 1246 new verison");
-
-        while(userinput<1||userinput>3) {
-            System.out.print("Your choice (1-3): ");
+        System.out.println("Enter 1 = 124, 2 = 1246, 3 = 138");
+        System.out.println("--------below 80------------------------");
+        System.out.println("Enter 4 = 124, 5 = 1246, 6 = 138");
+        System.out.println("--------below 80------------------------");
+        System.out.println("Enter 7 = six deck");
+        while(userinput<1||userinput>7) {
+            System.out.print("Your choice (1-7): ");
             userinput = s.nextInt();
+        }
+        double percent;
+        if(userinput==7){
+            numset=6;       //change to play 6 pack
+            percent=0.75;        //when 1.5 pack left
+            totalcard=numset*52;
+            poker=new int[1+totalcard];
+        }else{
+            percent=0.65;
         }
         create(poker, numset);
         //print(poker, numset);
@@ -70,26 +82,33 @@ public class Main {
                         //124    --------------------------------------------------------------------------------
                         //124    --------------------------------------------------------------------------------
                         //124    --------------------------------------------------------------------------------
-                        if (positive>4)
-                        {
-                            setbet(4);
-                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
-                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                        }
-                        else if (positive>2)
-                        {
-                            setbet(2);
-                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
-                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                        }
-                        else
+                        if (positive <= 3)//if current poaitive less than this number, then set bet to ...
                         {
                             setbet(1);
                             System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                             System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
                         }
+                        else //if greater than that positive
+                        {
+                            if (lastgame == 1) {
+                                setbet(2);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            } else if (lastgame == 4) {
+                                setbet(4);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            } else if (lastgame == 2) {
+                                setbet(4);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            } else {
+                                System.err.println("error1");
+                                System.exit(0);
+                            }
+                        }
                         break;
-                        //------------------------------------------------------------------------------------------
+                    //------------------------------------------------------------------------------------------
                     case 2:
                         //1246 old version-------------------------------------------------------------
                         //1246 old version-----------------------------------------------------------------------
@@ -105,24 +124,208 @@ public class Main {
                                 setbet(2);
                                 System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                            } else if (lastgame >= 4) {
+                            } else if (lastgame == 4) {
                                 setbet(6);
                                 System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                            } else if (lastgame >= 2) {
+                            } else if (lastgame == 2) {
                                 //cout<<"6666666";
                                 setbet(4);
                                 System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
                             } else {
-                                System.out.println("error1");
+                                System.err.println("error1");
                                 System.exit(0);
                             }
                         }
-                            // dont change anything below
-                            break;
-                    case 3: //1246
-                        if (back) {//bet(6)
+                        // dont change anything below
+                        break;
+                    case 3:
+                        /////138
+                        if (positive <= 3)//if current poaitive less than this number, then set bet to ...
+                        {
+                            setbet(1);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                        }
+                        else //if greater than that positive
+                        {
+                            if (lastgame == 1) {
+                                setbet(3);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            } else if (lastgame == 8) {
+                                setbet(8);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            } else if (lastgame == 3) {
+                                //cout<<"6666666";
+                                setbet(8);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            } else {
+                                System.err.println("error1 in case 3");
+                                System.exit(0);
+                            }
+                        }break;
+                    case 4: //124    --------------------------------------------------------------------------------
+                        //124    --------------------------------------------------------------------------------
+                        //124    --------------------------------------------------------------------------------
+                        //124    --------------------------------------------------------------------------------
+                        if(positive>=3) //if greater than that positive
+                        {
+                            if (positive==3&&cardcount<=22)
+                            {
+                                setbet(1);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            }
+                            else {
+                                if (lastgame == 1) {
+                                    setbet(2);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 4) {
+                                    setbet(4);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 2) {
+                                    setbet(4);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else {
+                                    System.err.println("error1");
+                                    System.exit(0);
+                                }
+                            }
+                        }else//positive <3
+                        {
+                            setbet(1);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                        }
+                        break;
+                    //------------------------------------------------------------------------------------------
+                    case 5:
+                        //1246 old version-------------------------------------------------------------
+                        //1246 old version-----------------------------------------------------------------------
+                        if(positive>=3) //if greater than that positive
+                        {
+                            if (positive==3&&cardcount<=22)
+                            {
+                                setbet(1);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            }
+                            else {
+                                if (lastgame == 1) {
+                                    setbet(2);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 4||lastgame == 6) {
+                                    setbet(6);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 2) {
+                                    setbet(4);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else {
+                                    System.err.println("error1");
+                                    System.exit(0);
+                                }
+                            }
+                        }else//positive <3
+                        {
+                            setbet(1);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                        }
+                        break;
+                    case 6:
+                        /////138
+                        if(positive>=3) //if greater than that positive
+                        {
+                            if (positive==3&&cardcount<=22)
+                            {
+                                setbet(1);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            }
+                            else {
+                                if (lastgame == 1) {
+                                    setbet(3);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 8) {
+                                    setbet(8);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 3) {
+                                    setbet(8);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else {
+                                    System.err.println("error1 in case 6");
+                                    System.exit(0);
+                                }
+                            }
+                        }else//positive <3
+                        {
+                            setbet(1);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+
+                        }break;
+                    case 7:
+                        /////6 pack
+                        Double p = new Double(positive);
+                        Double cardleft= new Double(totalcard-cardcount+1);
+                        double packleft = cardleft/52;
+                        System.out.printf("Positive: %d, Deck: %.2f, Positive/Deck= %.2f\n", positive,packleft,p/packleft);
+                        if(positive/packleft>1.5){
+                            setbet(20);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                        }else{
+                            setbet(1);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                        }
+                        /*
+                        if(positive>=3) //if greater than that positive
+                        {
+                            if (positive==3&&cardcount<=22)
+                            {
+                                setbet(1);
+                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                            }
+                            else {
+                                if (lastgame == 1) {
+                                    setbet(3);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 8) {
+                                    setbet(8);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else if (lastgame == 3) {
+                                    setbet(8);
+                                    System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                                    System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                                } else {
+                                    System.err.println("error1 in case 6");
+                                    System.exit(0);
+                                }
+                            }
+                        }else//positive <3
+                        {
+                            setbet(1);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+*/
+                        break;
+                    case 8: //1246
+                        if (back) {//bet(6) back= last game over bet
                             if (positive > 3) {
                                 back = true;
                                 setbet(6);
@@ -135,11 +338,11 @@ public class Main {
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);System.out.println("Since last game bet was $6");
                             }
                         } else if (positive <= 3)//if current poaitive less than this number, then set bet to ...
-                            {
-                                setbet(1);
-                                System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
-                                System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                            } else //if greater than that positive
+                        {
+                            setbet(1);
+                            System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
+                            System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
+                        } else //if greater than that positive
                         {
                             if (lastgame == 1) {
                                 setbet(2);
@@ -152,23 +355,23 @@ public class Main {
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
                                 System.out.println("Next game will also be bet of $6");
                             } else if (lastgame >= 2) {
-                                        //cout<<"6666666";
+                                //cout<<"6666666";
                                 setbet(4);
                                 System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
                             } else {
                                 System.out.println("error1");
                                 System.exit(0);
-                                    }
-                                }
-                                break;
-                            default:
-                                System.err.println("User input error");
-                                System.exit(0);
+                            }
                         }
+                        break;
+                    default:
+                        System.err.println("User input error");
+                        System.exit(0);
+                }
 
 
-
+                System.out.println("Card left: "+(totalcard-cardcount+1));//+1 because cardcount was int = 1
                 lastgame = (int)bet[0];
                 player[handscount*10 + 0] = intdis();//disturbiting cards
                 player[handscount*10 + 1] = intdis();
@@ -230,8 +433,6 @@ public class Main {
                 lastp=playercount;
                 lastd=dealercount;
                 System.out.printf("Player net winning: $%.1f\n", playercount - dealercount);
-                file.record((int)playercount - (int)dealercount);
-                file.recordString("\n");
                 System.out.printf("Positive: %d\n", positive);
 
                 if (playercount - dealercount>maxmoney) //if current net win > peak
@@ -246,6 +447,8 @@ public class Main {
                     }
                 }
                 gamecount++;
+                file.record((int)playercount - (int)dealercount);
+                file.recordString("\n");
             } while (cardcount < totalcard * percent);//how much of the card
             //cout << "gamecount: " << gamecount << "    This set Used card count: " << cardcount << endl;
             System.out.printf("Gamecount: %d\tThis set used card count: %d",gamecount,cardcount);
@@ -261,12 +464,11 @@ public class Main {
         System.out.format("%-16s: $%.1f    %s: $%.1f\n", "Player wins", playercount,"Dealer wins",dealercount);
         System.out.format("%-16s: $%.0f\n","Player net winning", playercount-dealercount);
         System.out.format("%-16s: $%d    %-10s:$%d\n", "Player max win", maxmoney,"Player max lose",gap);
-        System.out.print("Split game: ");
-        file.close();
+        System.out.printf("bet20: %d  win20: %d\n",b20,w20);
         int i=pan-1;
         while(i>pan-10)
         {
-           // System.out.printf("%d ", save[i]);
+            // System.out.printf("%d ", save[i]);
             i--;
         }
         System.out.printf("\nAA split game: %d\n", gg+1);
@@ -322,12 +524,12 @@ public class Main {
             int temp = arr[randomIndexToSwap];
             arr[randomIndexToSwap] = arr[i];
             arr[i] = temp;
-           // System.out.printf("%d ", i);
+            // System.out.printf("%d ", i);
         }
-        System.out.println("\n****Shuffling******");
+        System.out.println("\n***Shuffling***");
     }
 
-    public static void create(int[] poker, final int numset)
+    public static void create(int[] poker, int numset)
     {
         poker[0] = 0;
         for (int i = 0; i < 4 * numset; i++)//new set of card
@@ -349,12 +551,12 @@ public class Main {
         }//for
     }
 
-    public static void print(int[] arr, final int numset)
+    public static void print(int[] arr, int numset)
     {
         //cout << "  " << numset << " set of card in play. Shuffled deck: ";
         System.out.printf("   %d set of card in play. Shuffled deck: ", numset);
-        int totalcard = numset * 52;
-        for (int i = 1; i <= totalcard; i++)
+        int totalcard1 = numset * 52+1;
+        for (int i = 1; i < totalcard1; i++)
         {
             if (arr[i]==0)
             {
@@ -380,7 +582,7 @@ public class Main {
 
     public static int intdis()
     {
-        if (poker[cardcount] <= 7 && poker[cardcount] >= 2)//2-6 positive
+        if (poker[cardcount] <= 6 && poker[cardcount] >= 2)//2-6 positive
         {
             positive++;
         }
@@ -405,34 +607,34 @@ public class Main {
             case 7:
             case 8:
             {
-                //cout << "*******player called hit" << endl;
+                //cout << "***player called hit" << endl;
                 return 1;
             }
             //break;
             case 9:
                 if (value(dealer[0]) <= 6 && value(dealer[0]) > 2)
                 {
-                    //cout << "*******player called double" << endl;
+                    //cout << "***player called double" << endl;
                     return 2;
 
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
 
-              //  break;
+                //  break;
             case 10:
                 if (value(dealer[0]) <= 9 && value(dealer[0]) > 1)
                 {
-                    //cout << "*******player called double" << endl;
+                    //cout << "***player called double" << endl;
                     return 2;
 
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
 
@@ -441,67 +643,62 @@ public class Main {
             case 11:
                 if (blackjack(player, "Player", handscount))
                     return 3;
-                else if (value(dealer[0]) > 1)
-                {
-                    //cout << "*******player called double" << endl;
-                    return 2;
-                }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
-                    return 1;
+                    //cout << "***player called double" << endl;
+                    return 2;
                 }
 
-               // break;
+                // break;
             case 12:
                 if (value(dealer[0]) >= 4 && value(dealer[0]) <= 6)
                 {
-                    //cout << "*******player called stand" << endl;
+                    //cout << "***player called stand" << endl;
                     return 3;
 
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
 
-               // break;
+                // break;
             case 13:
             case 14:
             case 15:
             case 16:
                 if (value(dealer[0]) <= 6 && value(dealer[0]) > 1)
                 {
-                    //cout << "*******player called stand" << endl;
+                    //cout << "***player called stand" << endl;
                     return 3;
 
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
 
-              //  break;
+                //  break;
             case 17:
             case 18:
             case 19:
             case 20:
             case 21:
             {
-                //cout << "*******player called stand" << endl;
+                //cout << "***player called stand" << endl;
                 return 3;
             }
 
 
-          //  break;
+            //  break;
             default:
 
                 System.err.printf("error2 got input of case %d", choice);
                 System. exit(0);
                 return 0;
-          //  break;
+            //  break;
         }
     }
 
@@ -513,60 +710,60 @@ public class Main {
             case 3:
                 if (value(dealer[0]) <= 4 || value(dealer[0]) >= 7)//1-4, 7-10
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
                 else
                 {
-                    //cout << "*******player called double" << endl;
+                    //cout << "***player called double" << endl;
                     return 2;
                 }
-             //   break;
+                //   break;
             case 4:
             case 5:
                 if (value(dealer[0]) <= 3 || value(dealer[0]) >= 7)//1-3,7-10
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
                 else
                 {
-                    //cout << "*******player called double" << endl;
+                    //cout << "***player called double" << endl;
                     return 2;
                 }
-               // break;
+                // break;
             case 6:
                 if (value(dealer[0]) >= 3 && value(dealer[0]) <= 6)//3-6
                 {
-                    //cout << "*******player called double" << endl;
+                    //cout << "***player called double" << endl;
                     return 2;
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
-               // break;
+                // break;
             case 7:
                 if (value(dealer[0]) == 9 || value(dealer[0]) == 10 || value(dealer[0]) == 1)//9, 10 , 1
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
                 else if (value(dealer[0]) == 2 || value(dealer[0]) == 7 || value(dealer[0]) == 8)//2, 7 , 8
                 {
-                    //cout << "*******player called stand" << endl;
+                    //cout << "***player called stand" << endl;
                     return 3;
                 }
                 else
                 {
-                    //cout << "*******player called double" << endl;
+                    //cout << "***player called double" << endl;
                     return 2;
                 }
-               // break;
+                // break;
             case 8:
             case 9:
-            case 10: //cout << "*******player called stand" << endl;
+            case 10: //cout << "***player called stand" << endl;
                 return 3;
             //break;
             default:
@@ -574,7 +771,7 @@ public class Main {
                 System.err.printf("error3 got input of case %d", hand);
                 System. exit(0);
                 return 0;
-           // break;
+            // break;
         }
     }
 
@@ -583,92 +780,92 @@ public class Main {
         switch (hand)
         {
             case 1:
-                //cout << "*******player called split" << endl;
+                //cout << "***player called split" << endl;
                 return 5;
-           // break;
+            // break;
             case 2:
             case 3:
                 if (value(dealer[0]) >= 4 && value(dealer[0]) <= 7)
                 {
-                    //cout << "*******player called split" << endl;
+                    //cout << "***player called split" << endl;
                     return 4;
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
-               // break;
+                // break;
             case 4:
                 if (value(dealer[0]) >= 5 && value(dealer[0]) <= 6)
                 {
-                    //cout << "*******player called split" << endl;
+                    //cout << "***player called split" << endl;
                     return 4;
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
             case 5:
                 if (value(dealer[0]) == 1 || value(dealer[0]) == 10)
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
                 else
                 {
-                    //cout << "*******player called double" << endl;
+                    //cout << "***player called double" << endl;
                     return 2;
                 }
-               // break;
+                // break;
             case 6:
                 if (value(dealer[0]) >= 2 && value(dealer[0]) <= 6)
                 {
-                    //cout << "*******player called split" << endl;
+                    //cout << "***player called split" << endl;
                     return 4;
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
-               // break;
+                // break;
             case 7:
                 if (value(dealer[0]) >= 2 && value(dealer[0]) <= 7)
                 {
-                    //cout << "*******player called split" << endl;
+                    //cout << "***player called split" << endl;
                     return 4;
                 }
                 else
                 {
-                    //cout << "*******player called hit" << endl;
+                    //cout << "***player called hit" << endl;
                     return 1;
                 }
-               // break;
+                // break;
             case 8:
-                //cout << "*******player called split" << endl;
+                //cout << "***player called split" << endl;
                 return 4;
             //break;
 
             case 9:
                 if (value(dealer[0]) == 7 || value(dealer[0]) == 10 || value(dealer[0]) == 1)
                 {
-                    //    cout << "*******player called stand" << endl;
+                    //    cout << "***player called stand" << endl;
                     return 3;
                 }
                 else
                 {
-                    //cout << "*******player called split" << endl;
+                    //cout << "***player called split" << endl;
                     return 4;
                 }
-              //  break;
+                //  break;
             default:
                 //cout << "error4 got input of case "<< hand;
                 System.err.printf("error4 got input of case %d", hand);
                 System. exit(0);
                 return 0;
-           // break;
+            // break;
         }
     }
 
@@ -678,7 +875,7 @@ public class Main {
         switch (action)
         {
             case 1: //hit
-               //cout  << handscount + 1 << "player called hit" << endl;
+                //cout  << handscount + 1 << "player called hit" << endl;
                 System.out.printf("%dplayer called hit\n", handscount+1);
                 player[++playerhandcount] = intdis();//distribute from play[2]
                 psum = sum(player, handscount);//player sum
@@ -715,7 +912,7 @@ public class Main {
                 doublerate++;
                 checkdouble = 1;//double flag
                 bet[handscount] = bet[handscount] * 2;//double the bet
-               // cout << handscount + 1 << "player called double" << endl;
+                // cout << handscount + 1 << "player called double" << endl;
                 System.out.printf("%dplayer called double\n", handscount+1);
                 System.out.printf("$$bet of $ %.1f \n", bet[handscount]);
                 player[handscount * 10 + 2] = intdis();
@@ -747,7 +944,7 @@ public class Main {
                     //find the next empty stack
                 }
                 if(i==2){
-                   // gg=gamecount;
+                    // gg=gamecount;
                 }
                 player[handscount * 10 + 1] = intdis();//assign second card to first hand
                 coutcard(player, "Player", handscount);//display 1player
@@ -796,7 +993,7 @@ public class Main {
                 break;
 
             default:
-               // cout << "error5 got input of case "<<action;
+                // cout << "error5 got input of case "<<action;
                 System.err.printf("error5 got input of case %d",action);
                 System. exit(0);
                 break;
@@ -844,7 +1041,7 @@ public class Main {
             }
             else if (checkace(dealer, 0) && (sum(dealer, 0) - 1) == 6) //soft 17, ace and 6
             {
-               // cout << "Dealer soft 17!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
+                // cout << "Dealer soft 17!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
                 System.out.println("Dealer soft 17!!!!!!!!!!!!!!!!!!!!!");
                 dealer[dealerhandcount++] = intdis();
                 acevalue(dealer, 0);
@@ -883,27 +1080,27 @@ public class Main {
             case 2: return "2";
             //break;
             case 3: return "3";
-           // break;
+            // break;
             case 4: return "4";
-           // break;
+            // break;
             case 5: return "5";
-           // break;
+            // break;
             case 6: return "6";
             //break;
             case 7: return "7";
-           // break;
+            // break;
             case 8: return "8";
-           // break;
+            // break;
             case 9: return "9";
-           // break;
+            // break;
             case 10: return "10";
-           // break;
+            // break;
             case 11: return"A";
-           // break;
+            // break;
             case 12: return "J";
-           // break;
+            // break;
             case 13: return "Q";
-          //  break;
+            //  break;
             case 14: return "K";
             //    break;
 
@@ -912,7 +1109,7 @@ public class Main {
                 System.err.printf("error6 got input of case%d", value);
                 System. exit(0);
                 return "error";
-           // break;
+            // break;
 
 
         }
@@ -949,7 +1146,7 @@ public class Main {
         System.out.format("%d%s card:%-20s%d%s sum: %-4dP: %d\n", hand+1, name, tostring(arr,startpoint),hand+1,name,sum(arr, hand), positive);
 
 
-       // System.out.printf("%d%s sum: %d   P: %d\n",hand+1,name,sum(arr, hand), positive);
+        // System.out.printf("%d%s sum: %d   P: %d\n",hand+1,name,sum(arr, hand), positive);
 
     }
 
@@ -993,7 +1190,16 @@ public class Main {
 
         }
     }
-
+    public static void count20(int i){
+        if(bet[i]>=20){
+            b20++;
+        }
+    }
+    public static void win20(int i){
+        if(bet[i]>=20){
+            w20++;
+        }
+    }
     public static void result()
     {
         int itrystack = 0;//try from array[0]
@@ -1001,6 +1207,8 @@ public class Main {
             System.out.print("[FINAL]");
             coutcard(player, "Player", itrystack);
             itrystack++;
+            count20(itrystack);
+
         }
         System.out.print("[FINAL]");
         coutcard(dealer, "Dealer", 0);
@@ -1012,6 +1220,7 @@ public class Main {
                 {
                     System.out.printf("======%dPlayer win!!!!!\n",trystack  + 1 );
                     playerwin++;
+                    win20(trystack);
                     System.out.printf("%dPlayer win: $ %.1f\n",trystack  + 1,bet[trystack]);
                     playercount += bet[trystack];//player get the bet
                 }
@@ -1021,6 +1230,7 @@ public class Main {
                     playerwin++;
                     System.out.printf("%dPlayer win: $ %.1f\n",trystack  + 1,bet[trystack]);
                     playercount += bet[trystack];//player get the bet
+                    win20(trystack);
                 }
                 else if (sum(player, trystack) < sum(dealer, 0))
                 {
@@ -1033,6 +1243,7 @@ public class Main {
                 {
                     System.out.printf("======%dTIE game\n",trystack  + 1 );
                     tiegame++;
+                    b20--;
                 }
 
             }
@@ -1051,6 +1262,7 @@ public class Main {
                     System.out.printf("======%dDealer busted!!!!!\n",trystack  + 1 );
                     System.out.printf("%dPlayer get: $ %.1f\n",trystack  + 1,bet[trystack]);
                     playercount += bet[trystack];//player get the bet
+                    win20(trystack);
                 }
                 else{//catch error
                     System.err.println("error7");
@@ -1098,7 +1310,7 @@ public class Main {
             System.out.println("Playerbusts >21");
             //cout << "==========Dealer won!!!!!" << endl;
             //dealercount += bet[hand];//in case if player doubles
-           // cout << handscount + 1 << "player loses: $" << bet[hand] << endl;//display before set the bet to 0
+            // cout << handscount + 1 << "player loses: $" << bet[hand] << endl;//display before set the bet to 0
             //bet[handscount] = 0;
             System.out.printf("%dPlayer loses: $ %.1f\n",handscount + 1, bet[hand]);
             dealerwin++;
@@ -1137,7 +1349,7 @@ public class Main {
                 }
 
             }
-           // cout << "========" << name << " has blackjack!!!\n";
+            // cout << "========" << name << " has blackjack!!!\n";
             System.out.printf("=====%s has blackjack!!!!\n",name);
             return true;
         }
@@ -1165,6 +1377,10 @@ public class Main {
 
 }
 class CreateFile {
+    //inside main
+    //CreateFile file = new CreateFile("number.txt");
+    //file.record((int)playercount - (int)dealercount);
+    //file.recordString("\n");
     private Formatter x;
     CreateFile(String filename){//open file in constructor
         openFile(filename);
