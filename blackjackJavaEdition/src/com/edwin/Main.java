@@ -4,11 +4,11 @@ import java.io.FileNotFoundException;
 import java.util.*;
 //  Created by Edwin Kam on 7/24/20.
 //  Copyright ©️ 2020 Edwin. All rights reserved.
-//8/6/2020 java version
+//8/21/2020 java version
 public class Main {
     public static  int numset = 2; //how many set of card will be use
     //public static double percent = 0.65;//how many cards used before before shuffling
-    public static int gamenum = 3000000; //how many games you want
+    public static int gamenum = 1000; //how many games you want
 
     //function
     //function
@@ -45,7 +45,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        CreateFile file = new CreateFile("number.txt");
+        CreateFile file = new CreateFile("number2.txt");
         System.out.println("Enter 1 = 124, 2 = 1246, 3 = 138");
         System.out.println("--------below 80------------------------");
         System.out.println("Enter 4 = 124, 5 = 1246, 6 = 138");
@@ -472,7 +472,7 @@ public class Main {
             i--;
         }
         System.out.printf("\nAA split game: %d\n", gg+1);
-
+        file.close();
 
     }
     public static void start()
@@ -1381,6 +1381,7 @@ class CreateFile {
     //CreateFile file = new CreateFile("number.txt");
     //file.record((int)playercount - (int)dealercount);
     //file.recordString("\n");
+    //file.close();
     private Formatter x;
     CreateFile(String filename){//open file in constructor
         openFile(filename);
