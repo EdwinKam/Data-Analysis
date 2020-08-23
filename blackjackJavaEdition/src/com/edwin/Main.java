@@ -124,7 +124,7 @@ public class Main {
                                 setbet(2);
                                 System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                            } else if (lastgame == 4) {
+                            } else if (lastgame == 4||lastgame==6) {
                                 setbet(6);
                                 System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
@@ -207,8 +207,6 @@ public class Main {
                         break;
                     //------------------------------------------------------------------------------------------
                     case 5:
-                        //1246 old version-------------------------------------------------------------
-                        //1246 old version-----------------------------------------------------------------------
                         if(positive>=3) //if greater than that positive
                         {
                             if (positive==3&&cardcount<=22)
@@ -582,7 +580,7 @@ public class Main {
 
     public static int intdis()
     {
-        if (poker[cardcount] <= 6 && poker[cardcount] >= 2)//2-6 positive
+        if (poker[cardcount] <= 7 && poker[cardcount] >= 2)//2-7 positive
         {
             positive++;
         }

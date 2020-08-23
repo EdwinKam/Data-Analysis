@@ -8,7 +8,7 @@ import java.util.*;
 public class Main {
     public static  int numset = 2; //how many set of card will be use
     //public static double percent = 0.65;//how many cards used before before shuffling
-    public static int gamenum = 3000000; //how many games you want
+    public static int gamenum = 20000; //how many games you want
 
     //function
     //function
@@ -123,7 +123,7 @@ public class Main {
                                 setbet(2);
                                 System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
-                            } else if (lastgame == 4) {
+                            } else if (lastgame == 4||lastgame == 6) {
                                 setbet(6);
                                 System.out.printf("Current positivity: %d.\tLast game bet was: %d\n", positive, lastgame);
                                 System.out.printf("$$$$$$set bet to $ %.1f.\n", bet[0]);
@@ -456,8 +456,8 @@ public class Main {
         System.out.format("%-16s:%7.0f    %-10s:%5.2f\n", "Player win game", playerwin,"Playerwin rate",playerwin / gamecount);
         System.out.format("%-16s:%7.0f    %-10s:%5.2f\n", "Dealer win game", dealerwin,"Dealerwin rate",dealerwin / gamecount);
         System.out.format("%-16s:%7.0f    %-10s:%5.2f\n", "TIE game", tiegame,"Tie rate",tiegame / gamecount);
-        System.out.format("%-16s:%7.0f    %-10s:%5.2f\n", "Double win game", doublerate,"Double win rate",doublerate / gamecount);
-        System.out.format("%-16s:%7.0f    %-10s:%5.2f\n", "Split win game", split,"Split win rate",split / gamecount);
+        System.out.format("%-16s:%7.0f    %-10s:%5.2f\n", "Double game", doublerate,"Double rate",doublerate / gamecount);
+        System.out.format("%-16s:%7.0f    %-10s:%5.2f\n", "Split game", split,"Split rate",split / gamecount);
         System.out.format("%-16s: $%.1f    %s: $%.1f\n", "Player wins", playercount,"Dealer wins",dealercount);
         System.out.format("%-16s: $%.0f\n","Player net winning", playercount-dealercount);
         System.out.format("%-16s: $%d    %-10s:$%d\n", "Player max win", maxmoney,"Player max lose",gap);
@@ -579,7 +579,7 @@ public class Main {
 
     public static int intdis()
     {
-        if (poker[cardcount] <= 6 && poker[cardcount] >= 2)//2-6 positive
+        if (poker[cardcount] <= 7 && poker[cardcount] >= 2)//2-6 positive
         {
             positive++;
         }
