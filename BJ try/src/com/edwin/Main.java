@@ -8,7 +8,7 @@ import java.util.*;
 public class Main {
     public static  int numset = 2; //how many set of card will be use
     //public static double percent = 0.65;//how many cards used before before shuffling
-    public static int gamenum = 1000; //how many games you want
+    public static int gamenum = 300000; //how many games you want
 
     //function
     //function
@@ -20,6 +20,7 @@ public class Main {
     public static int []poker = new int [1 + totalcard];//number of card in play
     public static int []shuffnum= new int [totalcard];
     public static int []dealer =new int [10];
+    public static boolean []fifteen =new boolean[10];
     public static int []player= new int[1000];
     public static double []bet= new double[10];
     public static int handscount=0;
@@ -41,7 +42,7 @@ public class Main {
     public static int save[]= new int[100];
     public static  boolean back=false;
     public static Scanner s = new Scanner(System.in);
-    public static int b20=0,w20=0;
+    public static int b20=0,w20=0,p15=0,w15=0,t15=0,l15=0,check15=0;
 
 
     public static void main(String[] args) {
@@ -445,8 +446,8 @@ public class Main {
                     }
                 }
                 gamecount++;
-               // file.record((int)playercount - (int)dealercount);
-               // file.recordString("\n");
+                // file.record((int)playercount - (int)dealercount);
+                // file.recordString("\n");
             } while (cardcount < totalcard * percent);//how much of the card
             //cout << "gamecount: " << gamecount << "    This set Used card count: " << cardcount << endl;
             System.out.printf("Gamecount: %d\tThis set used card count: %d",gamecount,cardcount);
@@ -462,11 +463,11 @@ public class Main {
         System.out.format("%-16s: $%.1f    %s: $%.1f\n", "Player wins", playercount,"Dealer wins",dealercount);
         System.out.format("%-16s: $%.0f\n","Player net winning", playercount-dealercount);
         System.out.format("%-16s: $%d    %-10s:$%d\n", "Player max win", maxmoney,"Player max lose",gap);
-        System.out.printf("bet20: %d  win20: %d\n",b20,w20);
+        System.out.printf("play15: %d  win15: %d    loss15: %d      tie15:%d    check15:%d\n",p15,w15,l15,t15,check15);
         int i=pan-1;
-        while(i>pan-10)
+        while(i>=0)
         {
-            // System.out.printf("%d ", save[i]);
+             //System.out.printf("%d ", save[i]);
             i--;
         }
         System.out.printf("\nAA split game: %d\n", gg+1);
@@ -664,8 +665,6 @@ public class Main {
                 // break;
             case 13:
             case 14:
-            case 15:
-            case 16:
                 if (value(dealer[0]) <= 6 && value(dealer[0]) > 1)
                 {
                     //cout << "***player called stand" << endl;
@@ -677,8 +676,26 @@ public class Main {
                     //cout << "***player called hit" << endl;
                     return 1;
                 }
+            case 15:
+            case 16:
+                if (value(dealer[0]) <= 6 && value(dealer[0]) > 1)
+                {
+                    //cout << "***player called stand" << endl;
+                    return 3;
 
-                //  break;
+                }
+                else if(positive>=4){
+                    System.out.printf("Positive >= 4, player should call stand!!!!!!!!!!!");
+                    return 3;
+                }
+                else
+                {
+                    //save[pan++] = gamecount + 1;//save split game
+                    fifteen[handscount]=true;
+                    p15++;
+                    //cout << "***player called hit" << endl;
+                    return 1;
+                }
             case 17:
             case 18:
             case 19:
@@ -933,7 +950,7 @@ public class Main {
                 if(pan>80){
                     pan=0;
                 }
-                save[pan++] = gamecount + 1;//save split game
+
 
                 split++;
                 while (player[i * 10] != 0)
@@ -1213,9 +1230,13 @@ public class Main {
         int trystack = 0;//try from array[0]
         System.out.println();
         while (player[trystack*10] != 0) {
+            if(fifteen[trystack]){
+                check15++;
+            }
             if (sum(player, trystack) < 22 && sum(dealer, 0) < 22) {
                 if (blackjack(player, "Player", trystack))
                 {
+                    incFifteen(trystack,1);
                     System.out.printf("======%dPlayer win!!!!!\n",trystack  + 1 );
                     playerwin++;
                     win20(trystack);
@@ -1224,6 +1245,7 @@ public class Main {
                 }
                 else if (sum(player, trystack) > sum(dealer, 0))
                 {
+                    incFifteen(trystack,1);
                     System.out.printf("======%dPlayer win!!!!!\n",trystack  + 1 );
                     playerwin++;
                     System.out.printf("%dPlayer win: $ %.1f\n",trystack  + 1,bet[trystack]);
@@ -1232,6 +1254,7 @@ public class Main {
                 }
                 else if (sum(player, trystack) < sum(dealer, 0))
                 {
+                    incFifteen(trystack,2);
                     System.out.printf("======%dDealer win!!!!!\n",trystack  + 1 );
                     dealerwin++;
                     System.out.printf("%dPlayer lose: $ %.1f\n",trystack  + 1,bet[trystack]);
@@ -1239,6 +1262,7 @@ public class Main {
                 }
                 else
                 {
+                    incFifteen(trystack,3);
                     System.out.printf("======%dTIE game\n",trystack  + 1 );
                     tiegame++;
                     b20--;
@@ -1251,12 +1275,14 @@ public class Main {
             {
                 if (sum(player, trystack) >21)//if player bust
                 {
+                    incFifteen(trystack,2);
                     System.out.printf("======%dPlayer busted!!!!!\n",trystack  + 1 );
                     System.out.printf("%dPlayer lose: $ %.1f\n",trystack  + 1,bet[trystack]);
                     dealercount += bet[trystack];//dealer gets the bet
                 }
                 else if (sum(dealer, 0)>21)//dealer busted
                 {
+                    incFifteen(trystack,1);
                     System.out.printf("======%dDealer busted!!!!!\n",trystack  + 1 );
                     System.out.printf("%dPlayer get: $ %.1f\n",trystack  + 1,bet[trystack]);
                     playercount += bet[trystack];//player get the bet
@@ -1323,6 +1349,10 @@ public class Main {
         {
             arr[i] = 0;
         }
+        for (int i = 0; i < 10; i++)
+        {
+            fifteen[i] = false;
+        }
         dealerhandcount = 2;
         playerhandcount = 1;
         handscount = 0;
@@ -1371,7 +1401,23 @@ public class Main {
         a[i] = a[j];
         a[j] = t;
     }
-
+    public static void incFifteen(int hand,int win){//1=win 2=loss 3=tie
+        if(fifteen[hand]){
+            if(win==1) {
+                w15++;
+            }
+            else if(win==2){
+                l15++;
+            }
+            else if(win==3){
+                t15++;
+            }
+            else{
+                System.err.println("error 101");
+                System.exit(0);
+            }
+        }
+    }
 
 }
 
