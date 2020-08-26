@@ -8,7 +8,8 @@ import java.util.*;
 public class Main {
     public static  int numset = 2; //how many set of card will be use
     //public static double percent = 0.65;//how many cards used before before shuffling
-    public static int gamenum = 300000; //how many games you want
+    public static int gamenum = 3000; //how many games you want
+    public static int set15=0;//set to 1 if u want it stand when positive>=4, otherwse set to 0
 
     //function
     //function
@@ -74,6 +75,10 @@ public class Main {
             cardcount = 1;
             positive = 0;//initial posivity
             do {
+                if(check15!=p15){
+                    System.out.printf("play15: %d  win15: %d    loss15: %d      tie15:%d    check15:%d\n",p15,w15,l15,t15,check15);
+                    System.exit(0);
+                }
                 System.out.println("====================New Game===================");
                 System.out.printf("Game %d\n",gamecount + 1);
                 intialhands(player,psize);
@@ -467,7 +472,7 @@ public class Main {
         int i=pan-1;
         while(i>=0)
         {
-             //System.out.printf("%d ", save[i]);
+             System.out.printf("%d ", save[i]);
             i--;
         }
         System.out.printf("\nAA split game: %d\n", gg+1);
@@ -684,15 +689,23 @@ public class Main {
                     return 3;
 
                 }
-                else if(positive>=4){
+                else if(positive>=4&&set15==1){
                     System.out.printf("Positive >= 4, player should call stand!!!!!!!!!!!");
+                    if(!fifteen[handscount]){
+                        fifteen[handscount]=true;
+                        p15++;
+                    }
+                   // save[pan++] = gamecount + 1;//save split game
                     return 3;
                 }
                 else
                 {
                     //save[pan++] = gamecount + 1;//save split game
-                    fifteen[handscount]=true;
-                    p15++;
+                    if(!fifteen[handscount]){
+                        fifteen[handscount]=true;
+                        p15++;
+                    }
+                    System.out.println("Inced!!!!!!!!!!!!!");
                     //cout << "***player called hit" << endl;
                     return 1;
                 }
@@ -989,7 +1002,7 @@ public class Main {
                 break;
 
             case 5://ace split
-                save[pan++]=gamecount;//save split gamecount
+                //save[pan++]=gamecount;//save split gamecount
                 split++;
                 gg=gamecount;
                 player[1]=intdis();//distribute first hand second card
