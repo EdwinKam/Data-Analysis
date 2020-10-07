@@ -8,7 +8,7 @@ import java.util.*;
 public class Main {
     public static  int numset = 2; //how many set of card will be use
     //public static double percent = 0.65;//how many cards used before before shuffling
-    public static int gamenum = 1000; //how many games you want
+    public static int gamenum = 1000000; //how many games you want
     public static double percent =0.65;
     //function
     //function
@@ -158,8 +158,8 @@ public class Main {
                 System.out.printf("Player win: $ %.1f\tDealer win: $ %.1f\n",playercount,dealercount );
                 System.out.printf("4000Player win: $ %.1f\n",start);
                 //file.record((int)playercount-(int)dealercount);
-                file.record((int)start);
-                file.recordString("\n");
+                //file.record((int)start);
+                //file.recordString("\n");
                 lastp=playercount;
                 lastd=dealercount;
                 System.out.printf("Player net winning: $%.1f\n", playercount - dealercount);
@@ -177,8 +177,8 @@ public class Main {
                     }
                 }
                 gamecount++;
-                // file.record((int)playercount - (int)dealercount);
-                // file.recordString("\n");
+                 file.record((int)playercount - (int)dealercount);
+                 file.recordString("\n");
             } while (cardcount < totalcard * percent);//how much of the card
             System.out.printf("Gamecount: %d\tThis set used card count: %d",gamecount,cardcount);
 
