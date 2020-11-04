@@ -27,7 +27,7 @@ int main() {
 				cout << endl;
 			}
 			else {
-				cout << "+++++++++++++++ nice you fucked up!!\n\n";
+				cout << "+++++++++++++++ nice, good bye!!\n\n";
 			}
 
 		}
