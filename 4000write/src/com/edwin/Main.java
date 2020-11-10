@@ -8,7 +8,7 @@ import java.util.*;
 public class Main {
     public static  int numset = 2; //how many set of card will be use
     //public static double percent = 0.65;//how many cards used before before shuffling
-    public static int gamenum = 1000000; //how many games you want
+    public static int gamenum = 10000; //how many games you want
     public static double percent =0.65;
     //function
     //function
