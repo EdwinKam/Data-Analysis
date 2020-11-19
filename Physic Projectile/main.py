@@ -9,7 +9,7 @@ def max_height():
     t = vy / 9.8
     yf = y0 + vy * t + 1 / 2 * 9.8 * t * t
     print(f"Time at the max height {round(t, 2)} s")
-    print(f"The max height will be {round(yf, 2)}")
+    print(f"The max height will be {round(yf, 2)}m")
 
 
 def final_velocity():
@@ -32,6 +32,33 @@ def position():
     print(f"Position at time at {round(t, 2)}s = {round(xf, 2)}m")
     print(f"Height at time at {round(t, 2)}s = {round(yf, 2)}m")
 
+def time_of_flight():
+    v0 = float(input('What is the initial velocity?(m/s^2) '))
+    theta = float(input('Angle subject to the horizontal line:(degree) '))
+    y0 = float(input('Initial height:(m): '))
+    vy = math.sin(math.radians(theta)) * v0
+    t = (-vy-math.sqrt(vy*vy+2*9.8*y0))/-9.8
+    print(f"Time of flight = {round(t, 3)}s")
+
+def final_position():
+    v0 = float(input('What is the initial velocity?(m/s^2) '))
+    theta = float(input('Angle subject to the horizontal line:(degree) '))
+    y0 = float(input('Initial height:(m): '))
+    x0 = float(input('Initial position x:(m): '))
+    vy = math.sin(math.radians(theta)) * v0
+    vx = math.cos(math.radians(theta)) * v0
+    t = (-vy-math.sqrt(vy*vy+2*9.8*y0))/-9.8
+    yf = y0 + vy * t + 1 / 2 * 9.8 * t * t
+    xf = x0 + vx * t + 1 / 2 * 9.8 * t * t
+    print(f"Final x position = {round(xf, 2)}m")
+
+
+
+
+
+
+
+
 
 def user_choice(choice):
     if choice == 1:
@@ -40,6 +67,10 @@ def user_choice(choice):
         final_velocity()
     elif choice == 3:
         position()
+    elif choice == 4:
+        time_of_flight()
+    elif choice == 5:
+        final_position()
 
 
 def menu():
@@ -47,6 +78,8 @@ def menu():
     print('1. Calculate Y max height.')
     print('2. Final Velocity.')
     print('3. X and Y postion at time t.')
+    print('4. Time of flight.')
+    print('5. Final position.')
     print('0. Exit')
 
 
