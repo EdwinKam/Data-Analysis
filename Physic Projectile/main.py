@@ -8,7 +8,7 @@ def max_height():
     vy = math.sin(math.radians(theta)) * v0
     t = vy / 9.8
     yf = y0 + vy * t + 1 / 2 * 9.8 * t * t
-    print(f"Time at the max height {round(t, 2)} s")
+    print(f'Time at the max height {round(t, 2)} s')
     print(f"The max height will be {round(yf, 2)}m")
 
 

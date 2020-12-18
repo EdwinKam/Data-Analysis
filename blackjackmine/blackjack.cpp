@@ -1,4 +1,4 @@
-﻿//
+//
 //  main.cpp
 //  blackjacksimulator
 //
@@ -20,7 +20,7 @@ using namespace std;
 //here
 const int numset = 2; //how many set of card will be use
 double percent = 0.65;//how many cards used before before shuffling
-int gamenum = 200; //how many games you want
+int gamenum = 2000000; //how many games you want
 //function
 //function
 //function
